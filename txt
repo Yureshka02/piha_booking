@@ -1,0 +1,172 @@
+document.addEventListener("DOMContentLoaded", function() {
+  loadLodges();
+});
+
+function loadLodges() {
+  fetch('lodges.xml')
+    .then(response => response.text())
+    .then(data => {
+      let parser = new DOMParser();
+      let xml = parser.parseFromString(data, "application/xml");
+      let lodges = xml.getElementsByTagName("lodge");
+
+      for (let lodge of lodges) {
+        let id = lodge.getAttribute("id");
+        let lodgeDiv = document.getElementById(`lodge${id}`);
+        let name = lodge.getElementsByTagName("name")[0].textContent;
+        let capacity = lodge.getElementsByTagName("capacity")[0].textContent;
+        let cost = lodge.getElementsByTagName("cost_per_day")[0].textContent;
+        let description = lodge.getElementsByTagName("description")[0].textContent;
+        let image = lodge.getElementsByTagName("image")[0].textContent;
+
+        lodgeDiv.addEventListener("mouseover", function() {
+          showLodgeInfo(name, description, image, lodgeDiv);
+        });
+
+        lodgeDiv.addEventListener("mouseout", function() {
+          hideLodgeInfo();
+        });
+
+        let booked = lodge.getElementsByTagName("booked")[0].textContent === "true";
+        lodgeDiv.style.backgroundColor = booked ? "rgba(255, 0, 0, 0.5)" : "rgba(0, 255, 0, 0.5)";
+        lodgeDiv.dataset.capacity = capacity;
+        lodgeDiv.dataset.booked = booked;
+      }
+    });
+}
+
+function showLodgeInfo(name, description, image, lodgeDiv) {
+  let lodgeInfo = document.getElementById("lodgeInfo");
+  document.getElementById("lodgeName").textContent = name;
+  document.getElementById("lodgeDescription").textContent = description;
+  document.getElementById("lodgeImage").src = image;
+
+  lodgeInfo.style.display = "block";
+  lodgeInfo.style.top = lodgeDiv.offsetTop + lodgeDiv.offsetHeight + "px";
+  lodgeInfo.style.left = lodgeDiv.offsetLeft + "px";
+}
+
+function hideLodgeInfo() {
+  document.getElementById("lodgeInfo").style.display = "none";
+}
+
+function showCustomerDetails() {
+  showPage('customerDetailsPage');
+}
+
+function goBack() {
+  showPage('bookingPage');
+}
+
+function showBookingConfirmation() {
+  // Fill in the booking confirmation details
+  document.getElementById("confirmCheckIn").value = document.getElementById("checkIn").value;
+  document.getElementById("confirmCheckOut").value = document.getElementById("checkOut").value;
+  document.getElementById("confirmGuests").value = document.getElementById("capacity").value;
+  document.getElementById("confirmLodge").value = document.getElementById("lodgeName").textContent;
+
+  showPage('bookingConfirmationPage');
+}
+
+function goToCustomerDetails() {
+  showPage('customerDetailsPage');
+}
+
+function searchLodges() {
+  let checkIn = document.getElementById("checkIn").value;
+  let checkOut = document.getElementById("checkOut").value;
+  let capacity = document.getElementById("capacity").value;
+
+  if (checkIn && checkOut && capacity) {
+    alert(`Searching for lodges available from ${checkIn} to ${checkOut} for ${capacity} people.`);
+    filterLodges(checkIn, checkOut, capacity);
+  } else {
+    alert("Please fill out all fields.");
+  }
+}
+
+function filterLodges(checkIn, checkOut, capacity) {
+  let lodgesAvailable = false; // Flag to track availability
+
+  fetch('lodges.xml')
+    .then(response => response.text())
+    .then(data => {
+      let parser = new DOMParser();
+      let xml = parser.parseFromString(data, "application/xml");
+      let lodges = xml.getElementsByTagName("lodge");
+
+      for (let lodge of lodges) {
+        let id = lodge.getAttribute("id");
+        let booked = lodge.getElementsByTagName("booked")[0].textContent === "true";
+        let lodgeCapacity = parseInt(lodge.getElementsByTagName("capacity")[0].textContent);
+        let lodgeDiv = document.getElementById(`lodge${id}`);
+
+        if (!booked && lodgeCapacity >= parseInt(capacity)) {
+          lodgeDiv.style.backgroundColor = "rgba(0, 255, 0, 0.5)";
+          lodgesAvailable = true; // Set flag to true if any lodges are available
+        } else {
+          lodgeDiv.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+        }
+      }
+
+      // Navigate to the next page if lodges are available
+      if (lodgesAvailable) {
+        showCustomerDetails(); // Call the page navigation function here
+      } else {
+        alert("No lodges available for the selected dates and capacity.");
+      }
+    });
+}
+
+
+function submitDetails() {
+  let fullName = document.getElementById("fullName").value;
+  let mobile = document.getElementById("mobile").value;
+  let email = document.getElementById("email").value;
+  let confirmEmail = document.getElementById("confirmEmail").value;
+
+  if (fullName && mobile && email && confirmEmail && email === confirmEmail) {
+    showBookingConfirmation();
+  } else {
+    alert("Please fill out all fields correctly.");
+  }
+}
+
+function proceedToPayment() {
+  showPage('paymentConfirmationPage');
+}
+
+function goToBookingConfirmation() {
+  showPage('bookingConfirmationPage');
+}
+
+function showBookingSummary() {
+  // Fill in the booking summary details
+  document.getElementById("summaryName").value = document.getElementById("fullName").value;
+  document.getElementById("summaryCheckIn").value = document.getElementById("confirmCheckIn").value;
+  document.getElementById("summaryCheckOut").value = document.getElementById("confirmCheckOut").value;
+  document.getElementById("summaryGuests").value = document.getElementById("confirmGuests").value;
+  document.getElementById("summaryLodge").value = document.getElementById("confirmLodge").value;
+  document.getElementById("summaryTotal").value = calculateTotal();
+
+  showPage('bookingSummaryPage');
+}
+
+function calculateTotal() {
+  let checkInDate = new Date(document.getElementById("confirmCheckIn").value);
+  let checkOutDate = new Date(document.getElementById("confirmCheckOut").value);
+  let costPerDay = 100; // Replace with actual cost per day
+  let numberOfDays = (checkOutDate - checkInDate) / (1000 * 3600 * 24);
+  return numberOfDays * costPerDay;
+}
+
+function showPage(pageId) {
+  let pages = document.querySelectorAll('.page');
+  pages.forEach(page => {
+    if (page.id === pageId) {
+      page.style.display = 'block';
+    } else {
+      page.style.display = 'none';
+    }
+  });
+}

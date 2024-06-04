@@ -1,0 +1,82 @@
+<lodges>
+  <lodge id="1">
+    <name>Lodge 1</name>
+    <capacity>2</capacity>
+    <cost_per_day>100</cost_per_day>
+    <booked>false</booked>
+    <image>lodge1.jpg</image>
+    <description>A cozy lodge for two with a beautiful view.</description>
+  </lodge>
+  <lodge id="2">
+    <name>Lodge 2</name>
+    <capacity>2</capacity>
+    <cost_per_day>110</cost_per_day>
+    <booked>true</booked>
+    <image>lodge2.jpg</image>
+    <description>A perfect lodge for a romantic getaway.</description>
+  </lodge>
+  <lodge id="3">
+    <name>Lodge 3</name>
+    <capacity>2</capacity>
+    <cost_per_day>120</cost_per_day>
+    <booked>false</booked>
+    <image>lodge3.jpg</image>
+    <description>A quaint lodge for a peaceful retreat.</description>
+  </lodge>
+  <lodge id="4">
+    <name>Lodge 4</name>
+    <capacity>2</capacity>
+    <cost_per_day>130</cost_per_day>
+    <booked>false</booked>
+    <image>lodge4.jpg</image>
+    <description>A delightful lodge with modern amenities.</description>
+  </lodge>
+  <lodge id="5">
+    <name>Lodge 5</name>
+    <capacity>4</capacity>
+    <cost_per_day>200</cost_per_day>
+    <booked>false</booked>
+    <image>lodge5.jpg</image>
+    <description>Spacious lodge for a small family.</description>
+  </lodge>
+  <lodge id="6">
+    <name>Lodge 6</name>
+    <capacity>4</capacity>
+    <cost_per_day>210</cost_per_day>
+    <booked>true</booked>
+    <image>lodge6.jpg</image>
+    <description>Comfortable lodge with excellent facilities.</description>
+  </lodge>
+  <lodge id="7">
+    <name>Lodge 7</name>
+    <capacity>6</capacity>
+    <cost_per_day>300</cost_per_day>
+    <booked>false</booked>
+    <image>lodge7.jpg</image>
+    <description>Large lodge perfect for a group of friends.</description>
+  </lodge>
+  <lodge id="8">
+    <name>Lodge 8</name>
+    <capacity>6</capacity>
+    <cost_per_day>320</cost_per_day>
+    <booked>false</booked>
+    <image>lodge8.jpg</image>
+    <description>Spacious lodge with great amenities.</description>
+  </lodge>
+  <lodge id="9">
+    <name>Lodge 9</name>
+    <capacity>8</capacity>
+    <cost_per_day>400</cost_per_day>
+    <booked>true</booked>
+    <image>lodge9.jpg</image>
+    <description>Luxurious lodge for a large family or group.</description>
+  </lodge>
+  <lodge id="10">
+    <name>Lodge 10</name>
+    <capacity>2</capacity>
+    <cost_per_day>150</cost_per_day>
+    <booked>false</booked>
+    <image>lodge10.jpg</image>
+    <description>Private lodge for a couple.</description>
+  </lodge>
+</lodges>

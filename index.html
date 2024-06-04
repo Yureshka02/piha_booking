@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piha Holiday Lodges Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Booking Page -->
+  <div id="bookingPage" class="page active">
+    <h1>PIHA LODGE BOOKING</h1>
+    <div class="description">
+      <p>BOOK YOUR LODGE NOW!!!</p>
+      <p>Escape to a tranquil beach lodge for a rejuvenating getaway. Enjoy stunning ocean views, comfortable accommodations, and serene surroundings. Reserve your stay by selecting your desired dates and lodge. Fill in your details, confirm your booking, and prepare for an unforgettable experience. Book now and unwind by the sea!!!</p>
+    </div>
+    <div class="booking-form">
+      <h2>HOW TO BOOK YOUR STAY</h2>
+      <form>
+        <label for="checkIn">Check In:</label>
+        <input type="date" id="checkIn" required>
+        <label for="checkOut">Check Out:</label>
+        <input type="date" id="checkOut" required>
+        <label for="capacity">Capacity:</label>
+        <input type="number" id="capacity" min="1" max="10" required>
+        <button type="button" onclick="searchLodges()">Check availability</button>
+      </form>
+    </div>
+    <div id="map">
+      <div class="lodge" id="lodge1">01</div>
+      <div class="lodge" id="lodge2">02</div>
+      <div class="lodge" id="lodge3">03</div>
+      <div class="lodge" id="lodge4">04</div>
+      <div class="lodge" id="lodge5">05</div>
+      <div class="lodge" id="lodge6">06</div>
+      <div class="lodge" id="lodge7">07</div>
+      <div class="lodge" id="lodge8">08</div>
+      <div class="lodge" id="lodge9">09</div>
+      <div class="lodge" id="lodge10">10</div>
+    </div>
+    <div id="lodgeInfo" class="info-window">
+      <h3 id="lodgeName"></h3>
+      <p id="lodgeDescription"></p>
+      <img id="lodgeImage" src="" alt="Lodge Image">
+      <p id="lodgeCapacity"></p>
+      <p id="lodgeCost"></p>
+      <p id="lodgeBooked"></p>
+      <button onclick="showCustomerDetails()">BOOK NOW</button>
+    </div>
+  </div>
+
+  <!-- Customer Details Page -->
+  <div id="customerDetailsPage" class="page">
+    <h1>PIHA LODGE BOOKING</h1>
+    <div class="customer-details-form">
+      <h2>CUSTOMER DETAILS</h2>
+      <form>
+        <label for="fullName">NAME IN FULL</label>
+        <input type="text" id="fullName" required>
+        <label for="mobile">MOBILE</label>
+        <input type="tel" id="mobile" pattern="[0-9]{10}" required>
+        <small>Format: 1234567890</small>
+        <label for="email">EMAIL ADDRESS</label>
+        <input type="email" id="email" required>
+        <label for="confirmEmail">CONFIRM EMAIL</label>
+        <input type="email" id="confirmEmail" required>
+        <div class="buttons">
+          <button type="button" onclick="goBack()">Back</button>
+          <button type="button" onclick="showBookingConfirmation()">Next</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Booking Confirmation Page -->
+  <div id="bookingConfirmationPage" class="page">
+    <h1>PIHA LODGE BOOKING</h1>
+    <div class="booking-confirmation-form">
+      <h2>BOOKING CONFIRMATION</h2>
+      <form>
+        <label for="confirmCheckIn">Check In:</label>
+        <input type="text" id="confirmCheckIn" readonly>
+        <label for="confirmCheckOut">Check Out:</label>
+        <input type="text" id="confirmCheckOut" readonly>
+        <label for="confirmGuests">Number of Guests:</label>
+        <input type="text" id="confirmGuests" readonly>
+        <label for="confirmLodge">Lodge:</label>
+        <input type="text" id="confirmLodge" readonly>
+        <div class="buttons">
+          <button type="button" onclick="goToCustomerDetails()">Back</button>
+          <button type="button" onclick="proceedToPayment()">Proceed to payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment Confirmation Page -->
+  <div id="paymentConfirmationPage" class="page">
+    <h1>PIHA LODGE BOOKING</h1>
+    <div class="payment-confirmation-form">
+      <h2>PAYMENT CONFIRMATION</h2>
+      <form>
+        <label for="cardName">NAME ON CARD</label>
+        <input type="text" id="cardName" required>
+        <label for="cardNumber">CARD NUMBER</label>
+        <input type="text" id="cardNumber" pattern="[0-9]{13,16}" maxlength="16" required>
+        <small>Format: 13-16 digits</small>
+        <label for="expiryDate">EXPIRY DATE</label>
+        <input type="text" id="expiryDate" pattern="(0[1-9]|1[0-2])/[0-9]{2}" maxlength="5" required>
+        <small>Format: MM/YY</small>
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" pattern="[0-9]{3}" maxlength="3" required>
+        <small>Format: 3 digits</small>
+        <div class="buttons">
+          <button type="button" onclick="goToBookingConfirmation()">Back</button>
+          <button type="button" onclick="showBookingSummary()">Next</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Booking Summary Page -->
+  <div id="bookingSummaryPage" class="page">
+    <h1>PIHA LODGE BOOKING</h1>
+    <div class="booking-summary-form">
+      <h2>BOOKING SUMMARY</h2>
+      <form>
+        <label for="summaryName">NAME</label>
+        <input type="text" id="summaryName" readonly>
+        <label for="summaryCheckIn">CHECK IN DATE & TIME</label>
+        <input type="text" id="summaryCheckIn" readonly>
+        <label for="summaryCheckOut">CHECK OUT DATE & TIME</label>
+        <input type="text" id="summaryCheckOut" readonly>
+        <label for="summaryGuests">NUMBER OF GUESTS</label>
+        <input type="text" id="summaryGuests" readonly>
+        <label for="summaryLodge">LODGE NUMBER</label>
+        <input type="text" id="summaryLodge" readonly>
+        <label for="summaryTotal">TOTAL PAY</label>
+        <input type="text" id="summaryTotal" readonly>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
